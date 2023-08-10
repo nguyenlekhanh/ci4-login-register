@@ -140,4 +140,60 @@ class Auth extends BaseController
         }
 
     }
+
+    /**
+     * Upload user image
+     */
+    public function uploadImage() {
+
+        try {
+
+            $loggedInUserId = session()->get('loggedInUser');
+            $config['upload_path'] = getcwd().'/images';
+            $imageName = $this->request->getFile('userImage')->getName();
+
+            //check directory
+            if(!is_dir($config['upload_path'])) {
+                mkdir($config['upload_path'], 0777);
+            }
+
+            //get image
+            $img = $this->request->getFile('userImage');
+
+            if(!$img->hasMoved() && $loggedInUserId) {
+                $img->move($config['upload_path'], $imageName);
+
+                $data = [
+                    'avatar' => $imageName,
+                ];
+
+                $userModel = new UserModel();
+                $userModel->update($loggedInUserId, $data);
+
+                return redirect()->to('/dashboard')->with('notification',
+                    'Image Uploaded successfully'
+                );
+            } else {
+
+                return redirect()->to('/dashboard')->with('notification',
+                    'Image Uploaded failed'
+                );
+            }
+
+        } catch(Exception $e) {
+            echo $e->getMessage();
+        }
+        
+    }
+
+    public function logout() {
+        //echo 'logout';
+        if(session()->has('loggedInUser')) {
+            session()->remove('loggedInUser');
+        }
+
+        return redirect()->to('/auth?access=loggedout')->with('fail',
+            'You are logged out'
+        );
+    }
 }
