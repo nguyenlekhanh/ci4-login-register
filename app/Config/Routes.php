@@ -34,6 +34,7 @@ $routes->get('/', 'Home::index');
 $routes->get('/auth', 'Auth::index');
 $routes->get('/auth/register', 'Auth::register');
 $routes->post('/auth/registerUser', 'Auth::registerUser');
+$routes->post('/auth/loginUser', 'Auth::loginUser');
 /*
  * --------------------------------------------------------------------
  * Additional Routing

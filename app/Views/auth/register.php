@@ -12,6 +12,25 @@
       <div class="col-md-4 offset-4">
         <h4>Sign In</h4>
         <hr>
+        <?php
+          if(!empty(session()->getFlashData('success'))) {
+            ?>
+              <div class="alert alert-success">
+                <?=
+                  session()->getFlashData('success')
+                ?>
+              </div>
+            <?php
+          } else if(!empty(session()->getFlashData('fail'))) {
+            ?>
+              <div class="alert alert-danger">
+                <?=
+                  session()->getFlashData('fail')
+                ?>
+              </div>
+            <?php
+          }
+        ?>
         <form action="<?= base_url('auth/registerUser') ?>" class="form"
           method="post"
           class="form mb-3"

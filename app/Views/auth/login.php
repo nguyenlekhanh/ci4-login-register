@@ -12,7 +12,7 @@
       <div class="col-md-4 offset-4">
         <h4>Sign In</h4>
         <hr>
-        <form actoin="" class="form"
+        <form action="<?= base_url('auth/loginUser') ?>" class="form"
           method="post"
           class="form mb-3"
         >
@@ -22,14 +22,22 @@
               <input type="text" class="form-control"
                 name="email"
                 placeholder="Email Here"
+                value="<?=set_value("email") ?>"
               >
+              <span class="text-danger text-sm">
+                <?= isset($validation) ? display_form_errors($validation, 'email') : '' ?>
+              </span>
           </div>
           <div class="form-group  mb-3">
               <label for="">Password</label>
               <input type="text" class="form-control"
                 name="password"
                 placeholder="Password Here"
+                value="<?=set_value("password") ?>"
               >
+              <span class="text-danger text-sm">
+                <?= isset($validation) ? display_form_errors($validation, 'password') : '' ?>
+              </span>
           </div>
           <div class="form-group  mb-3">
               <input type="submit" class="btn btn-info"
